@@ -12,6 +12,19 @@ Aplicação web simples para registrar atendimentos de assistência técnica de 
 
 O programa funciona sem conexão com a internet. Para salvar diretamente em uma pasta, use um navegador compatível, como uma versão atual do Chrome ou Edge, e conceda a permissão solicitada. Se esse recurso não estiver disponível, o navegador usará o fluxo normal de download.
 
+## Publicar no GitHub Pages
+
+O workflow `.github/workflows/pages.yml` publica o site automaticamente quando há alterações nos arquivos da aplicação na branch `master`. O artefato publicado contém apenas `index.html`, `style.css`, `script.js` e `ordemServicoTemplate.js`; a pasta `OS-Finalizadas` e os documentos DOCX não são copiados para o site.
+
+Para ativar:
+
+1. No GitHub, abra **Settings → Pages** do repositório.
+2. Em **Build and deployment**, selecione **GitHub Actions** como fonte.
+3. Envie o workflow e os arquivos atualizados para a branch `master`.
+4. Acompanhe a execução em **Actions**. Após a publicação, o endereço será `https://anselmo17.github.io/ordem-servico/`.
+
+**Privacidade:** o repositório está público e contém documentos de ordens de serviço. Limitar o artefato do Pages não oculta esses arquivos do próprio repositório. Remova os documentos e, para impedir que continuem acessíveis em commits anteriores, limpe também o histórico público antes de divulgar o site. Não adicione ordens de clientes ao Git.
+
 ## Campos do formulário
 
 - **Nome do Cliente**: obrigatório; no documento, a primeira letra aparece em maiúscula; o nome do arquivo é gerado em maiúsculas.
