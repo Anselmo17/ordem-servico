@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ordem de Serviço</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <div class="identificacao">
+        <span>JM DIGITAL</span>
+        <svg class="icone-celular" viewBox="0 0 120 58" role="img" aria-label="Celular">
+          <rect x="2" y="2" width="116" height="54" rx="11" fill="#252525" />
+          <rect x="9" y="7" width="102" height="44" rx="4" fill="#73777c" />
+          <path d="M18 10h52L50 48H18z" fill="#aeb2b6" opacity=".55" />
+          <rect x="5" y="20" width="3" height="14" rx="1.5" fill="#c6c8ca" />
+          <circle cx="7" cy="12" r="1.5" fill="#c6c8ca" />
+          <rect x="112" y="19" width="3" height="16" rx="1.5" fill="#171717" />
+        </svg>
+      </div>
+      <h1>Ordem de Serviço</h1>
+    </header>
+
+    <form id="formOS">
+      <h2 class="secao-titulo">Dados do cliente e do aparelho</h2>
+      <label for="documento">CPF ou RG</label>
+      <input id="documento" name="documento" inputmode="text" maxlength="20" placeholder="Digite o CPF ou RG" />
+      <p id="tipoIdentificado" class="ajuda-documento">O tipo será identificado automaticamente.</p>
+
+      <label for="nome">Nome do Cliente</label>
+      <input id="nome" name="nome" required />
+
+      <label for="endereco">Endereço</label>
+      <input id="endereco" name="endereco" autocomplete="street-address" />
+
+      <label for="contato">Contato</label>
+      <input id="contato" name="contato" type="tel" autocomplete="tel" placeholder="(00) 00000-0000" />
+
+      <label for="modelo">Modelo do aparelho</label>
+      <input id="modelo" name="modelo" placeholder="Ex.: iPhone 13, Galaxy A54..." />
+
+      <label for="servico">Serviço realizado</label>
+      <textarea id="servico" name="servico" rows="2" placeholder="Ex.: troca de tela, bateria..."></textarea>
+
+      <div class="acoes">
+        <button type="button" id="btnPasta" class="secundario">Escolher pasta</button>
+        <button type="submit">Gerar Ordem de Serviço</button>
+      </div>
+      <p id="pastaAtual"></p>
+      <p id="erro" class="erro"></p>
+    </form>
+  </main>
+
+  <dialog id="modalSucesso" aria-labelledby="tituloSucesso">
+    <h2 id="tituloSucesso">Ordem de serviço salva!</h2>
+    <p id="mensagemSucesso"></p>
+    <button type="button" id="fecharModal">Fechar</button>
+  </dialog>
+
+  <script src="ordemServicoTemplate.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
