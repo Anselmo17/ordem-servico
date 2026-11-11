@@ -14,8 +14,8 @@ O programa funciona sem conexão com a internet. Para salvar diretamente em uma 
 
 ## Campos do formulário
 
-- **Nome do Cliente**: obrigatório; aparece em maiúsculas no documento e no nome do arquivo.
-- **CPF ou RG**: opcional. Para 11 dígitos numéricos, o campo aplica a máscara de CPF; não valida os dígitos verificadores. Outros formatos são tratados como RG.
+- **Nome do Cliente**: obrigatório; no documento, a primeira letra aparece em maiúscula; o nome do arquivo é gerado em maiúsculas.
+- **CPF ou RG**: opcional e aceita somente números. Até 11 dígitos, aplica progressivamente a máscara de CPF sem validar os dígitos verificadores; acima de 11, trata o valor como RG sem máscara de CPF.
 - **Endereço**, **Contato**, **Modelo do aparelho** e **Serviço realizado**: opcionais.
 - **Data de entrada**: preenchida automaticamente com a data em que a ordem é gerada. A data de retirada continua em branco no modelo.
 

@@ -13,21 +13,18 @@ function formatarCpf(numeros) {
 }
 
 inputDocumento.addEventListener('input', function () {
-  var valor = inputDocumento.value.trim();
-  var numeros = valor.replace(/\D/g, '');
-  var formatoNumerico = /^[\d.\-\s]*$/.test(valor);
+  var numeros = inputDocumento.value.replace(/\D/g, '').slice(0, 20);
 
-  if (formatoNumerico && numeros.length <= 11) {
+  if (numeros.length > 0 && numeros.length <= 11) {
     inputDocumento.value = formatarCpf(numeros);
     tipoIdentificado.textContent = numeros.length === 11
       ? 'Tipo identificado: CPF'
-      : 'O tipo será identificado automaticamente.';
-  } else if (formatoNumerico && numeros.length > 11) {
+      : 'CPF (máscara aplicada)';
+  } else if (numeros.length > 11) {
     inputDocumento.value = numeros;
     tipoIdentificado.textContent = 'Tipo identificado: RG';
-  } else if (/[A-Za-z]/.test(valor)) {
-    tipoIdentificado.textContent = 'Tipo identificado: RG';
   } else {
+    inputDocumento.value = '';
     tipoIdentificado.textContent = 'O tipo será identificado automaticamente.';
   }
 });
@@ -50,6 +47,8 @@ inputContato.addEventListener('input', function () {
 });
 
 var pastaHandle = null;
+var mensagemPasta = document.getElementById('pastaAtual');
+mensagemPasta.textContent = 'Pasta selecionada: Downloads do navegador (padrão).';
 
 if (!('showDirectoryPicker' in window)) {
   document.getElementById('btnPasta').style.display = 'none';
@@ -60,10 +59,10 @@ document.getElementById('btnPasta').addEventListener('click', async function () 
     var handle = await window.showDirectoryPicker({ startIn: 'documents', mode: 'readwrite' });
     if (await handle.requestPermission({ mode: 'readwrite' }) === 'granted') {
       pastaHandle = handle;
-      document.getElementById('pastaAtual').textContent = 'Pasta selecionada: ' + handle.name;
+      mensagemPasta.textContent = 'Pasta selecionada: ' + handle.name;
     } else {
       pastaHandle = null;
-      document.getElementById('pastaAtual').textContent = 'Sem permissão de escrita na pasta.';
+      mensagemPasta.textContent = 'Sem permissão para a pasta. O arquivo será salvo nos Downloads.';
     }
   } catch (err) {
     if (err.name !== 'AbortError') {
@@ -309,15 +308,46 @@ async function gerarDocumentoDoModelo(dados) {
   if (xml.getElementsByTagName('parsererror').length) {
     throw new Error('Não foi possível interpretar o conteúdo do modelo DOCX.');
   }
+  var namespaceWord = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main';
+  var linhaIdentificacao = xml.getElementsByTagNameNS(namespaceWord, 'tr')[0];
+  var textosMarca = linhaIdentificacao.getElementsByTagNameNS(namespaceWord, 't');
+  var textoMarca = null;
+  for (var indiceTexto = 0; indiceTexto < textosMarca.length; indiceTexto++) {
+    if (textosMarca[indiceTexto].textContent.indexOf('JM DIGITAL') !== -1) {
+      textoMarca = textosMarca[indiceTexto];
+      break;
+    }
+  }
+  if (textoMarca) {
+    var run = textoMarca.parentNode;
+    var propriedadesRun = run.getElementsByTagNameNS(namespaceWord, 'rPr')[0];
+    if (!propriedadesRun) {
+      propriedadesRun = xml.createElementNS(namespaceWord, 'w:rPr');
+      run.insertBefore(propriedadesRun, textoMarca);
+    }
+    var posicaoVertical = xml.createElementNS(namespaceWord, 'w:position');
+    posicaoVertical.setAttributeNS(namespaceWord, 'w:val', '8');
+    var tamanhoFonte = propriedadesRun.getElementsByTagNameNS(namespaceWord, 'sz')[0];
+    if (tamanhoFonte) {
+      propriedadesRun.insertBefore(posicaoVertical, tamanhoFonte);
+    } else {
+      propriedadesRun.appendChild(posicaoVertical);
+    }
+  }
   var formatarLinha = function (rotulo, valor) {
     return [
       { texto: rotulo, negrito: true },
       { texto: valor ? ' ' + valor : '', negrito: false }
     ];
   };
+  var capitalizarInicial = function (texto) {
+    return texto
+      ? texto.charAt(0).toLocaleUpperCase('pt-BR') + texto.slice(1)
+      : '';
+  };
 
-  preencherLinhaDocx(xml, 4, formatarLinha('NOME:', dados.nome));
-  preencherLinhaDocx(xml, 5, formatarLinha('ENDERECO:', dados.endereco));
+  preencherLinhaDocx(xml, 4, formatarLinha('NOME:', capitalizarInicial(dados.nome)));
+  preencherLinhaDocx(xml, 5, formatarLinha('ENDERECO:', capitalizarInicial(dados.endereco)));
   preencherLinhaDocx(xml, 6, [
     { texto: 'CPF/RG:', negrito: true },
     { texto: dados.documento ? ' ' + dados.documento : '', negrito: false },
@@ -329,8 +359,8 @@ async function gerarDocumentoDoModelo(dados) {
     { texto: ' ' + dados.dataEntrada + '     ', negrito: false },
     { texto: 'DATA RETIRADA:', negrito: true }
   ]);
-  preencherLinhaDocx(xml, 8, formatarLinha('MODELO:', dados.modelo));
-  preencherLinhaDocx(xml, 9, formatarLinha('SERVICO REALIZADO:', dados.servico));
+  preencherLinhaDocx(xml, 8, formatarLinha('MODELO:', capitalizarInicial(dados.modelo)));
+  preencherLinhaDocx(xml, 9, formatarLinha('SERVICO REALIZADO:', capitalizarInicial(dados.servico)));
 
   entradaDocumento.dados = new TextEncoder().encode(new XMLSerializer().serializeToString(xml));
   return criarZipSemCompactacao(entradas);
@@ -347,19 +377,18 @@ document.getElementById('formOS').addEventListener('submit', async function (e) 
   var botaoGerar = e.submitter;
 
   var documento = inputDocumento.value.trim();
-  var nome = document.getElementById('nome').value.trim().toLocaleUpperCase('pt-BR');
+  var nome = document.getElementById('nome').value.trim();
   var endereco = document.getElementById('endereco').value.trim();
   var contato = document.getElementById('contato').value.trim();
   var modelo = document.getElementById('modelo').value.trim();
   var servico = document.getElementById('servico').value.trim();
   var numerosDocumento = documento.replace(/\D/g, '');
-  var formatoNumerico = /^[\d.\-\s]*$/.test(documento);
   var tipo = documento
-    ? (formatoNumerico && numerosDocumento.length === 11 ? 'CPF' : 'RG')
+    ? (numerosDocumento.length <= 11 ? 'CPF' : 'RG')
     : '';
 
   var documentoValido = !documento || tipo === 'CPF' ||
-    /^[A-Za-z0-9][A-Za-z0-9.\-/ ]{4,19}$/.test(documento);
+    /^\d{5,20}$/.test(numerosDocumento);
   if (!documentoValido) {
     document.getElementById('erro').textContent = 'RG inválido.';
     return;
@@ -369,7 +398,7 @@ document.getElementById('formOS').addEventListener('submit', async function (e) 
     ? ''
     : tipo === 'CPF'
       ? numerosDocumento
-      : documento.replace(/[<>:"/\\|?*\u0000-\u001F]/g, '').trim().replace(/\s+/g, '');
+      : numerosDocumento;
   var nomeArquivo = document.getElementById('nome').value.trim()
     .toLocaleUpperCase('pt-BR')
     .replace(/[<>:"/\\|?*\u0000-\u001F]/g, '') || 'CLIENTE';

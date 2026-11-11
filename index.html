@@ -25,7 +25,7 @@
     <form id="formOS">
       <h2 class="secao-titulo">Dados do cliente e do aparelho</h2>
       <label for="documento">CPF ou RG</label>
-      <input id="documento" name="documento" inputmode="text" maxlength="20" placeholder="Digite o CPF ou RG" />
+      <input id="documento" name="documento" inputmode="numeric" maxlength="25" placeholder="Somente números" />
       <p id="tipoIdentificado" class="ajuda-documento">O tipo será identificado automaticamente.</p>
 
       <label for="nome">Nome do Cliente (obrigatório)</label>
@@ -47,7 +47,7 @@
         <button type="button" id="btnPasta" class="secundario">Escolher pasta</button>
         <button type="submit">Gerar Ordem de Serviço</button>
       </div>
-      <p id="pastaAtual"></p>
+      <p id="pastaAtual" role="status">Nenhuma pasta escolhida. O arquivo será salvo nos Downloads.</p>
       <p id="erro" class="erro"></p>
     </form>
   </main>
