@@ -2,30 +2,17 @@ var inputDocumento = document.getElementById('documento');
 var tipoIdentificado = document.getElementById('tipoIdentificado');
 
 var botoesTema = document.querySelectorAll('[data-tema]');
-function aplicarTema(tema, salvarPreferencia) {
+function aplicarTema(tema) {
   document.body.setAttribute('data-tema', tema);
   botoesTema.forEach(function (botao) {
     botao.setAttribute('aria-pressed', String(botao.dataset.tema === tema));
   });
-  if (salvarPreferencia) {
-    try {
-      localStorage.setItem('jm-digital-tema', tema);
-    } catch (erro) {
-      console.warn('Não foi possível salvar a preferência de tema neste navegador.', erro);
-    }
-  }
 }
 
-var temaSalvo = 'claro';
-try {
-  temaSalvo = localStorage.getItem('jm-digital-tema') || 'claro';
-} catch (erro) {
-  console.warn('Não foi possível carregar a preferência de tema neste navegador.', erro);
-}
-aplicarTema(temaSalvo === 'escuro' ? 'escuro' : 'claro', false);
+aplicarTema('claro');
 botoesTema.forEach(function (botao) {
   botao.addEventListener('click', function () {
-    aplicarTema(botao.dataset.tema, true);
+    aplicarTema(botao.dataset.tema);
   });
 });
 

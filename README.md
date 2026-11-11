@@ -14,7 +14,7 @@ O programa funciona sem conexão com a internet. Para salvar diretamente em uma 
 
 Quando a pasta é escolhida, o programa tenta lembrá-la no navegador para reutilizá-la após atualizar a página. O navegador pode exigir autorização novamente ou não permitir persistir essa preferência; nesse caso, escolha a pasta outra vez. A preferência fica armazenada apenas no perfil do navegador e dispositivo usados.
 
-O formulário oferece os temas **Claro** e **Escuro**. A escolha é salva no navegador para a próxima utilização.
+O formulário oferece os temas **Claro** e **Escuro**. Ele sempre inicia no tema **Claro**; a escolha do tema escuro vale apenas até fechar ou atualizar a página.
 
 ## Publicar no GitHub Pages
 
