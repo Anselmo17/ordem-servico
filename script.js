@@ -78,9 +78,84 @@ var pastaHandle = null;
 var mensagemPasta = document.getElementById('pastaAtual');
 mensagemPasta.textContent = 'Pasta selecionada: Downloads do navegador (padrão).';
 
-if (!('showDirectoryPicker' in window)) {
-  document.getElementById('btnPasta').style.display = 'none';
+function abrirBancoPastas() {
+  return new Promise(function (resolve, reject) {
+    if (!window.indexedDB) {
+      reject(new Error('Este navegador não oferece armazenamento local de pastas.'));
+      return;
+    }
+
+    var requisicao = indexedDB.open('jm-digital-ordem-servico', 1);
+    requisicao.onupgradeneeded = function () {
+      if (!requisicao.result.objectStoreNames.contains('preferencias')) {
+        requisicao.result.createObjectStore('preferencias');
+      }
+    };
+    requisicao.onsuccess = function () { resolve(requisicao.result); };
+    requisicao.onerror = function () { reject(requisicao.error); };
+    requisicao.onblocked = function () { reject(new Error('O armazenamento local está ocupado por outra aba.')); };
+  });
 }
+
+async function guardarPasta(handle) {
+  var banco = await abrirBancoPastas();
+  try {
+    await new Promise(function (resolve, reject) {
+      var transacao = banco.transaction('preferencias', 'readwrite');
+      transacao.objectStore('preferencias').put(handle, 'pasta-selecionada');
+      transacao.oncomplete = resolve;
+      transacao.onerror = function () { reject(transacao.error); };
+      transacao.onabort = function () { reject(transacao.error); };
+    });
+  } finally {
+    banco.close();
+  }
+}
+
+async function recuperarPasta() {
+  var banco = await abrirBancoPastas();
+  try {
+    return await new Promise(function (resolve, reject) {
+      var requisicao = banco.transaction('preferencias', 'readonly')
+        .objectStore('preferencias')
+        .get('pasta-selecionada');
+      requisicao.onsuccess = function () { resolve(requisicao.result || null); };
+      requisicao.onerror = function () { reject(requisicao.error); };
+    });
+  } finally {
+    banco.close();
+  }
+}
+
+async function restaurarPastaSelecionada() {
+  if (!('showDirectoryPicker' in window)) {
+    document.getElementById('btnPasta').style.display = 'none';
+    return;
+  }
+
+  try {
+    var pastaSalva = await recuperarPasta();
+    if (!pastaSalva) return;
+
+    var permissao = await pastaSalva.queryPermission({ mode: 'readwrite' });
+    if (permissao !== 'granted') {
+      pastaHandle = null;
+      mensagemPasta.textContent =
+        'Pasta lembrada: ' + pastaSalva.name + '. Clique em "Escolher pasta" para autorizar novamente.';
+      return;
+    }
+
+    pastaHandle = pastaSalva;
+    mensagemPasta.textContent = 'Pasta selecionada: ' + pastaSalva.name;
+  } catch (erro) {
+    mensagemPasta.textContent =
+      'Pasta selecionada: Downloads do navegador (padrão). Não foi possível recuperar a pasta salva.';
+    document.getElementById('erro').textContent =
+      'O navegador não conseguiu restaurar a pasta escolhida. Selecione-a novamente: ' + erro.message;
+  }
+}
+
+restaurarPastaSelecionada();
 
 document.getElementById('btnPasta').addEventListener('click', async function () {
   try {
@@ -88,6 +163,14 @@ document.getElementById('btnPasta').addEventListener('click', async function () 
     if (await handle.requestPermission({ mode: 'readwrite' }) === 'granted') {
       pastaHandle = handle;
       mensagemPasta.textContent = 'Pasta selecionada: ' + handle.name;
+      try {
+        await guardarPasta(handle);
+      } catch (erro) {
+        mensagemPasta.textContent =
+          'Pasta selecionada: ' + handle.name + '. Será usada nesta sessão, mas não pôde ser lembrada.';
+        document.getElementById('erro').textContent =
+          'Não foi possível lembrar a pasta após atualizar a página: ' + erro.message;
+      }
     } else {
       pastaHandle = null;
       mensagemPasta.textContent = 'Sem permissão para a pasta. O arquivo será salvo nos Downloads.';

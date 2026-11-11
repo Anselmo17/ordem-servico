@@ -12,6 +12,8 @@ Aplicação web simples para registrar atendimentos de assistência técnica de 
 
 O programa funciona sem conexão com a internet. Para salvar diretamente em uma pasta, use um navegador compatível, como uma versão atual do Chrome ou Edge, e conceda a permissão solicitada. Se esse recurso não estiver disponível, o navegador usará o fluxo normal de download.
 
+Quando a pasta é escolhida, o programa tenta lembrá-la no navegador para reutilizá-la após atualizar a página. O navegador pode exigir autorização novamente ou não permitir persistir essa preferência; nesse caso, escolha a pasta outra vez. A preferência fica armazenada apenas no perfil do navegador e dispositivo usados.
+
 O formulário oferece os temas **Claro** e **Escuro**. A escolha é salva no navegador para a próxima utilização.
 
 ## Publicar no GitHub Pages
