@@ -23,7 +23,16 @@
     </header>
 
     <form id="formOS">
-      <h2 class="secao-titulo">Dados do cliente e do aparelho</h2>
+      <div class="cabecalho-formulario">
+        <h2 class="secao-titulo">Dados do cliente e do aparelho</h2>
+        <div class="controle-tema">
+          <span class="rotulo-tema">Tema:</span>
+          <div class="seletor-tema" role="group" aria-label="Escolha o tema do formulário">
+            <button type="button" class="opcao-tema" data-tema="claro" aria-pressed="true">☀ Claro</button>
+            <button type="button" class="opcao-tema" data-tema="escuro" aria-pressed="false">☾ Escuro</button>
+          </div>
+        </div>
+      </div>
       <label for="documento">CPF ou RG</label>
       <input id="documento" name="documento" inputmode="numeric" maxlength="25" placeholder="Somente números" />
       <p id="tipoIdentificado" class="ajuda-documento">O tipo será identificado automaticamente.</p>

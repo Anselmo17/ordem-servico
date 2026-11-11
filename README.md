@@ -12,6 +12,8 @@ Aplicação web simples para registrar atendimentos de assistência técnica de 
 
 O programa funciona sem conexão com a internet. Para salvar diretamente em uma pasta, use um navegador compatível, como uma versão atual do Chrome ou Edge, e conceda a permissão solicitada. Se esse recurso não estiver disponível, o navegador usará o fluxo normal de download.
 
+O formulário oferece os temas **Claro** e **Escuro**. A escolha é salva no navegador para a próxima utilização.
+
 ## Publicar no GitHub Pages
 
 O workflow `.github/workflows/pages.yml` publica o site automaticamente quando há alterações nos arquivos da aplicação na branch `master`. O artefato publicado contém apenas `index.html`, `style.css`, `script.js` e `ordemServicoTemplate.js`; a pasta `OS-Finalizadas` e os documentos DOCX não são copiados para o site.

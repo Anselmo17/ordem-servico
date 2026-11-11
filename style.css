@@ -1,10 +1,50 @@
 * { box-sizing: border-box; }
+:root {
+  color-scheme: light;
+  --fundo-pagina: linear-gradient(135deg, #e8eef5 0%, #f5f7fa 52%, #e5ecf4 100%);
+  --fundo-cartao: #fff;
+  --borda-cartao: #dfe5ed;
+  --borda-separador: #e7ebf0;
+  --texto: #172033;
+  --texto-marca: #111;
+  --texto-secundario: #526176;
+  --texto-ajuda: #687386;
+  --fundo-campo: #fff;
+  --borda-campo: #cbd4df;
+  --fundo-secundario: #fff;
+  --fundo-secundario-hover: #f4f6f9;
+  --texto-secundario-botao: #344258;
+  --fundo-pasta: #edf8f1;
+  --borda-pasta: #a9d8bd;
+  --texto-pasta: #17643a;
+  --sombra-cartao: 0 12px 32px rgba(24, 39, 61, 0.08);
+}
+body[data-tema="escuro"] {
+  color-scheme: dark;
+  --fundo-pagina: linear-gradient(135deg, #0b1422 0%, #131f30 52%, #0c1726 100%);
+  --fundo-cartao: #172538;
+  --borda-cartao: #40536b;
+  --borda-separador: #40536b;
+  --texto: #ffffff;
+  --texto-marca: #ffffff;
+  --texto-secundario: #eef4fb;
+  --texto-ajuda: #d3deeb;
+  --fundo-campo: #101c2b;
+  --borda-campo: #60758e;
+  --fundo-secundario: #24364b;
+  --fundo-secundario-hover: #304761;
+  --texto-secundario-botao: #ffffff;
+  --fundo-pasta: #123b2b;
+  --borda-pasta: #3c9b68;
+  --texto-pasta: #c7ffdb;
+  --sombra-cartao: 0 14px 36px rgba(0, 0, 0, 0.28);
+}
 body {
   min-height: 100vh;
   margin: 0;
   padding: 48px 16px;
-  background: #f1f4f8;
-  color: #172033;
+  background: var(--fundo-pagina);
+  color: var(--texto);
   font-family: Arial, sans-serif;
 }
 main {
@@ -12,15 +52,15 @@ main {
   max-width: 600px;
   margin: 0 auto;
   overflow: hidden;
-  border: 1px solid #dfe5ed;
+  border: 1px solid var(--borda-cartao);
   border-radius: 12px;
-  background: #fff;
-  box-shadow: 0 12px 32px rgba(24, 39, 61, 0.08);
+  background: var(--fundo-cartao);
+  box-shadow: var(--sombra-cartao);
 }
 header {
   padding: 22px 32px;
-  border-bottom: 1px solid #e7ebf0;
-  background: #fff;
+  border-bottom: 1px solid var(--borda-separador);
+  background: var(--fundo-cartao);
   text-align: center;
 }
 .identificacao {
@@ -29,7 +69,7 @@ header {
   justify-content: center;
   gap: 12px;
   margin: 0 0 12px;
-  color: #111;
+  color: var(--texto-marca);
   font-size: 28px;
   font-weight: 700;
   letter-spacing: 1px;
@@ -42,16 +82,57 @@ header {
   flex: 0 0 auto;
 }
 h1 { margin: 0; font-size: 26px; }
+.cabecalho-formulario {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.cabecalho-formulario .secao-titulo { margin: 0; }
+.controle-tema {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex: 0 0 auto;
+}
+.rotulo-tema {
+  display: inline;
+  color: var(--texto-ajuda);
+  font-size: 12px;
+  font-weight: 700;
+}
+.seletor-tema {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--borda-campo);
+  border-radius: 8px;
+  background: var(--fundo-campo);
+}
+button.opcao-tema {
+  min-height: 30px;
+  padding: 5px 10px;
+  border-color: transparent;
+  background: transparent;
+  color: var(--texto-secundario);
+  font-size: 12px;
+}
+button.opcao-tema:hover { background: var(--fundo-secundario-hover); }
+button.opcao-tema[aria-pressed="true"] {
+  border-color: #1769aa;
+  background: #1769aa;
+  color: #fff;
+}
 form { padding: 24px 32px 30px; }
 .secao-titulo {
-  margin: 0 0 18px;
-  color: #26364d;
+  color: var(--texto);
   font-size: 16px;
 }
 label {
   display: block;
   margin: 18px 0 7px;
-  color: #344258;
+  color: var(--texto-secundario);
   font-size: 14px;
   font-weight: 700;
 }
@@ -62,14 +143,15 @@ select {
   width: 100%;
   min-height: 46px;
   padding: 11px 13px;
-  border: 1px solid #cbd4df;
+  border: 1px solid var(--borda-campo);
   border-radius: 6px;
-  background: #fff;
-  color: #172033;
+  background: var(--fundo-campo);
+  color: var(--texto);
   font: inherit;
   transition: border-color 0.15s, box-shadow 0.15s;
 }
-input::placeholder { color: #929dad; }
+input::placeholder,
+textarea::placeholder { color: #929dad; }
 textarea {
   min-height: 76px;
   resize: vertical;
@@ -95,34 +177,36 @@ button {
   cursor: pointer;
 }
 button:hover { background: #12588f; }
-button.secundario { border-color: #cbd4df; background: #fff; color: #344258; }
-button.secundario:hover { background: #f4f6f9; }
+button.secundario { border-color: var(--borda-campo); background: var(--fundo-secundario); color: var(--texto-secundario-botao); }
+button.secundario:hover { background: var(--fundo-secundario-hover); }
 #pastaAtual {
   margin: 14px 0 0;
   padding: 12px 14px;
-  border: 1px solid #a9d8bd;
+  border: 1px solid var(--borda-pasta);
   border-radius: 7px;
-  background: #edf8f1;
-  color: #17643a;
+  background: var(--fundo-pasta);
+  color: var(--texto-pasta);
   font-size: 14px;
   font-weight: 700;
   overflow-wrap: anywhere;
 }
 #pastaAtual:empty { display: none; }
-.ajuda-documento { margin: 7px 0 0; color: #687386; font-size: 12px; }
+.ajuda-documento { margin: 7px 0 0; color: var(--texto-ajuda); font-size: 12px; }
 .erro { margin: 12px 0 0; color: #b42318; font-size: 13px; }
+body[data-tema="escuro"] .erro { color: #ff8f8f; }
 dialog {
   width: min(420px, calc(100% - 32px));
   padding: 28px;
   border: 0;
   border-radius: 12px;
-  color: #172033;
+  color: var(--texto);
+  background: var(--fundo-cartao);
   box-shadow: 0 20px 60px rgba(24, 39, 61, 0.25);
   text-align: center;
 }
 dialog::backdrop { background: rgba(15, 23, 42, 0.5); }
 dialog h2 { margin: 0 0 10px; font-size: 21px; }
-dialog p { color: #526176; line-height: 1.5; overflow-wrap: anywhere; }
+dialog p { color: var(--texto-secundario); line-height: 1.5; overflow-wrap: anywhere; }
 dialog button { margin: 12px auto 0; }
 @media (max-width: 480px) {
   body { padding: 20px 12px; }
@@ -130,7 +214,9 @@ dialog button { margin: 12px auto 0; }
   form { padding: 22px 20px 24px; }
   .identificacao { gap: 12px; font-size: 23px; }
   .icone-celular { width: 68px; }
+  button.opcao-tema { width: auto; }
   h1 { font-size: 23px; }
+  .cabecalho-formulario { align-items: flex-start; flex-direction: column; }
   .acoes { flex-direction: column; }
   button { width: 100%; }
 }
