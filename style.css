@@ -14,6 +14,9 @@
   --fundo-secundario: #fff;
   --fundo-secundario-hover: #f4f6f9;
   --texto-secundario-botao: #344258;
+  --cor-primaria: #1769aa;
+  --cor-primaria-hover: #12588f;
+  --cor-primaria-ativa: #0e4774;
   --fundo-pasta: #edf8f1;
   --borda-pasta: #a9d8bd;
   --texto-pasta: #17643a;
@@ -34,6 +37,12 @@ body[data-tema="escuro"] {
   --fundo-secundario: #24364b;
   --fundo-secundario-hover: #304761;
   --texto-secundario-botao: #ffffff;
+  --cor-primaria: #3f7189;
+  --cor-primaria-hover: #37647a;
+  --cor-primaria-ativa: #2e5366;
+  --fundo-botao-secundario: #263b52;
+  --borda-botao-secundario: #526a84;
+  --fundo-botao-secundario-hover: #304963;
   --fundo-pasta: #123b2b;
   --borda-pasta: #3c9b68;
   --texto-pasta: #c7ffdb;
@@ -120,8 +129,8 @@ button.opcao-tema {
 }
 button.opcao-tema:hover { background: var(--fundo-secundario-hover); }
 button.opcao-tema[aria-pressed="true"] {
-  border-color: #1769aa;
-  background: #1769aa;
+  border-color: var(--cor-primaria);
+  background: var(--cor-primaria);
   color: #fff;
 }
 form { padding: 24px 32px 30px; }
@@ -167,18 +176,25 @@ select:focus {
 button {
   min-height: 44px;
   padding: 11px 16px;
-  border: 1px solid #1769aa;
+  border: 1px solid var(--cor-primaria);
   border-radius: 6px;
-  background: #1769aa;
+  background: var(--cor-primaria);
   color: #fff;
   font: inherit;
   font-size: 14px;
   font-weight: 700;
   cursor: pointer;
 }
-button:hover { background: #12588f; }
-button.secundario { border-color: var(--borda-campo); background: var(--fundo-secundario); color: var(--texto-secundario-botao); }
-button.secundario:hover { background: var(--fundo-secundario-hover); }
+button:hover { background: var(--cor-primaria-hover); }
+button:active { background: var(--cor-primaria-ativa); }
+button.secundario {
+  border-color: var(--borda-botao-secundario, var(--borda-campo));
+  background: var(--fundo-botao-secundario, var(--fundo-secundario));
+  color: var(--texto-secundario-botao);
+}
+button.secundario:hover { background: var(--fundo-botao-secundario-hover, var(--fundo-secundario-hover)); }
+button.opcao-tema:hover { background: var(--fundo-secundario-hover); }
+button.opcao-tema[aria-pressed="true"]:hover { background: var(--cor-primaria-hover); }
 #pastaAtual {
   margin: 14px 0 0;
   padding: 12px 14px;
