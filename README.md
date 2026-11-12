@@ -10,7 +10,7 @@ Aplicação web simples para registrar atendimentos de assistência técnica de 
 4. Selecione **Escolher pasta** para gravar diretamente em uma pasta escolhida, quando o navegador oferecer esse recurso. Caso contrário, o arquivo é baixado pelo navegador.
 5. Clique em **Gerar Ordem de Serviço**. A confirmação aparece após a gravação ou o início do download.
 
-O programa funciona sem conexão com a internet. Para salvar diretamente em uma pasta, use um navegador compatível, como uma versão atual do Chrome ou Edge, e conceda a permissão solicitada. Se esse recurso não estiver disponível, o navegador usará o fluxo normal de download.
+O programa funciona sem conexão com a internet. Para salvar diretamente em uma pasta, use um navegador compatível, como uma versão atual do Chrome ou Edge, e conceda a permissão solicitada. Em navegadores sem esse recurso, como o Safari no iOS, o botão **Escolher pasta** permanece visível e informa que os arquivos serão baixados pelo navegador.
 
 Quando a pasta é escolhida, o programa tenta lembrá-la no navegador para reutilizá-la após atualizar a página. O navegador pode exigir autorização novamente ou não permitir persistir essa preferência; nesse caso, escolha a pasta outra vez. A preferência fica armazenada apenas no perfil do navegador e dispositivo usados.
 
