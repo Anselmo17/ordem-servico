@@ -166,10 +166,11 @@ textarea {
   resize: vertical;
 }
 .campos-financeiros {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
+  display: flex;
   gap: 14px;
 }
+.campo-financeiro:first-child { flex: 2; min-width: 0; }
+.campo-financeiro:last-child { flex: 1; min-width: 0; }
 .campo-financeiro label { margin-top: 18px; }
 input:focus,
 textarea:focus,
