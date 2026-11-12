@@ -165,6 +165,12 @@ textarea {
   min-height: 76px;
   resize: vertical;
 }
+.campos-financeiros {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 14px;
+}
+.campo-financeiro label { margin-top: 18px; }
 input:focus,
 textarea:focus,
 select:focus {
