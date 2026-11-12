@@ -61,6 +61,20 @@ inputContato.addEventListener('input', function () {
   }
 });
 
+var inputValor = document.getElementById('valor');
+inputValor.addEventListener('input', function () {
+  var digitos = inputValor.value.replace(/\D/g, '');
+  inputValor.value = digitos
+    ? new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })
+      .format(Number(digitos) / 100)
+    : '';
+});
+
+var inputGarantia = document.getElementById('garantia');
+inputGarantia.addEventListener('input', function () {
+  inputGarantia.value = inputGarantia.value.replace(/\D/g, '').slice(0, 2);
+});
+
 var pastaHandle = null;
 var mensagemPasta = document.getElementById('pastaAtual');
 mensagemPasta.textContent = 'Pasta selecionada: Downloads do navegador (padrão).';
@@ -459,6 +473,13 @@ async function gerarDocumentoDoModelo(dados) {
   ]);
   preencherLinhaDocx(xml, 8, formatarLinha('MODELO:', capitalizarInicial(dados.modelo)));
   preencherLinhaDocx(xml, 9, formatarLinha('SERVICO REALIZADO:', capitalizarInicial(dados.servico)));
+  preencherLinhaDocx(xml, 29, [
+    { texto: 'VALOR :', negrito: true },
+    { texto: dados.valor ? ' ' + dados.valor : '', negrito: false },
+    { texto: '                                        GARANTIA', negrito: true },
+    { texto: dados.garantia ? ' ' + dados.garantia : '', negrito: false },
+    { texto: dados.garantia ? ' DIAS' : '', negrito: true }
+  ]);
 
   entradaDocumento.dados = new TextEncoder().encode(new XMLSerializer().serializeToString(xml));
   return criarZipSemCompactacao(entradas);
@@ -480,6 +501,8 @@ document.getElementById('formOS').addEventListener('submit', async function (e) 
   var contato = document.getElementById('contato').value.trim();
   var modelo = document.getElementById('modelo').value.trim();
   var servico = document.getElementById('servico').value.trim();
+  var valor = inputValor.value.trim();
+  var garantia = inputGarantia.value.trim();
   var numerosDocumento = documento.replace(/\D/g, '');
   var tipo = documento
     ? (numerosDocumento.length <= 11 ? 'CPF' : 'RG')
@@ -516,7 +539,9 @@ document.getElementById('formOS').addEventListener('submit', async function (e) 
       contato: contato,
       dataEntrada: dataAtual,
       modelo: modelo,
-      servico: servico
+      servico: servico,
+      valor: valor,
+      garantia: garantia
     });
     var destino = await salvarArquivo(nomeCompletoArquivo, blob);
     document.getElementById('mensagemSucesso').textContent =

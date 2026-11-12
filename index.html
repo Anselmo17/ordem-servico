@@ -52,6 +52,17 @@
       <label for="servico">Serviço realizado</label>
       <textarea id="servico" name="servico" rows="2" placeholder="Ex.: troca de tela ou bateria"></textarea>
 
+      <div class="campos-financeiros">
+        <div class="campo-financeiro">
+          <label for="valor">Valor</label>
+          <input id="valor" name="valor" type="text" inputmode="decimal" placeholder="R$ 0,00" />
+        </div>
+        <div class="campo-financeiro">
+          <label for="garantia">Garantia</label>
+          <input id="garantia" name="garantia" type="text" inputmode="numeric" maxlength="2" placeholder="Ex.: 90 dias" />
+        </div>
+      </div>
+
       <div class="acoes">
         <button type="button" id="btnPasta" class="secundario">Escolher pasta</button>
         <button type="submit">Gerar Ordem de Serviço</button>
