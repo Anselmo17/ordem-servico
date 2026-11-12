@@ -130,7 +130,8 @@ async function recuperarPasta() {
 
 async function restaurarPastaSelecionada() {
   if (!('showDirectoryPicker' in window)) {
-    document.getElementById('btnPasta').style.display = 'none';
+    mensagemPasta.textContent =
+      'Este navegador não permite escolher uma pasta. O arquivo será baixado pelo navegador.';
     return;
   }
 
@@ -159,6 +160,12 @@ async function restaurarPastaSelecionada() {
 restaurarPastaSelecionada();
 
 document.getElementById('btnPasta').addEventListener('click', async function () {
+  if (!('showDirectoryPicker' in window)) {
+    mensagemPasta.textContent =
+      'Este navegador não permite escolher uma pasta. O arquivo será baixado pelo navegador.';
+    return;
+  }
+
   try {
     var handle = await window.showDirectoryPicker({ startIn: 'documents', mode: 'readwrite' });
     if (await handle.requestPermission({ mode: 'readwrite' }) === 'granted') {
