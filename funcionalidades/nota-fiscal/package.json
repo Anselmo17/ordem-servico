@@ -1,0 +1,11 @@
+{
+  "name": "jm-digital-nota-fiscal",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "build-assets": "node scripts/build-assets.js"
+  },
+  "dependencies": {
+    "pdf-lib": "1.17.1"
+  }
+}

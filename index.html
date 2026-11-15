@@ -2,83 +2,40 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Ordem de Serviço</title>
-  <link rel="stylesheet" href="style.css?v=2" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f3f6fa" />
+  <title>JM DIGITAL — Funcionalidades</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main>
-    <header>
-      <div class="identificacao">
-        <span>JM DIGITAL</span>
-        <svg class="icone-celular" viewBox="0 0 120 58" role="img" aria-label="Celular">
-          <rect x="2" y="2" width="116" height="54" rx="11" fill="#252525" />
-          <rect x="9" y="7" width="102" height="44" rx="4" fill="#73777c" />
-          <path d="M18 10h52L50 48H18z" fill="#aeb2b6" opacity=".55" />
-          <rect x="5" y="20" width="3" height="14" rx="1.5" fill="#c6c8ca" />
-          <circle cx="7" cy="12" r="1.5" fill="#c6c8ca" />
-          <rect x="112" y="19" width="3" height="16" rx="1.5" fill="#171717" />
-        </svg>
-      </div>
-      <h1>Ordem de Serviço</h1>
+  <main class="inicio">
+    <header class="cabecalho">
+      <p class="marca">JM DIGITAL</p>
+      <h1>O que você precisa fazer?</h1>
+      <p class="introducao">Escolha uma funcionalidade para continuar.</p>
     </header>
 
-    <form id="formOS">
-      <div class="cabecalho-formulario">
-        <h2 class="secao-titulo">Dados do cliente e do aparelho</h2>
-        <div class="controle-tema">
-          <span class="rotulo-tema">Tema:</span>
-          <div class="seletor-tema" role="group" aria-label="Escolha o tema do formulário">
-            <button type="button" class="opcao-tema" data-tema="claro" aria-pressed="true">☀ Claro</button>
-            <button type="button" class="opcao-tema" data-tema="escuro" aria-pressed="false">☾ Escuro</button>
-          </div>
-        </div>
-      </div>
-      <label for="documento">CPF ou RG</label>
-      <input id="documento" name="documento" placeholder="Somente números" inputmode="numeric" maxlength="25" />
-      <p id="tipoIdentificado" class="ajuda-documento">O tipo será identificado automaticamente.</p>
+    <section class="funcionalidades" aria-label="Funcionalidades disponíveis">
+      <a class="cartao" href="funcionalidades/ordem-servico/index.html">
+        <span class="icone" aria-hidden="true">OS</span>
+        <span class="conteudo-cartao">
+          <strong>Ordem de Serviço</strong>
+          <span>Preencha os dados do atendimento e gere o documento em Word.</span>
+        </span>
+        <span class="seta" aria-hidden="true">→</span>
+      </a>
 
-      <label for="nome">Nome do Cliente (obrigatório)</label>
-      <input id="nome" name="nome" placeholder="Nome completo" required />
+      <a class="cartao" href="funcionalidades/nota-fiscal/index.html">
+        <span class="icone nota-fiscal" aria-hidden="true">NF</span>
+        <span class="conteudo-cartao">
+          <strong>Nota Fiscal</strong>
+          <span>Preencha os dados do atendimento e gere o documento em PDF.</span>
+        </span>
+        <span class="seta" aria-hidden="true">→</span>
+      </a>
+    </section>
 
-      <label for="endereco">Endereço</label>
-      <input id="endereco" name="endereco" placeholder="Rua, número e bairro" autocomplete="street-address" />
-
-      <label for="contato">Contato</label>
-      <input id="contato" name="contato" type="tel" autocomplete="tel" placeholder="(00) 00000-0000" />
-
-      <label for="modelo">Modelo do aparelho</label>
-      <input id="modelo" name="modelo" placeholder="Ex.: iPhone 13, Galaxy A54..." />
-
-      <label for="servico">Serviço realizado</label>
-      <textarea id="servico" name="servico" rows="2" placeholder="Ex.: troca de tela ou bateria"></textarea>
-
-      <div class="campos-financeiros">
-        <div class="campo-financeiro">
-          <label for="valor">Valor</label>
-          <input id="valor" name="valor" type="text" inputmode="decimal" placeholder="R$ 0,00" />
-        </div>
-        <div class="campo-financeiro">
-          <label for="garantia">Garantia</label>
-          <input id="garantia" name="garantia" type="text" inputmode="numeric" maxlength="2" placeholder="Ex.: 90 dias" />
-        </div>
-      </div>
-
-      <div class="acoes">
-        <button type="button" id="btnPasta" class="secundario">Escolher pasta</button>
-        <button type="submit">Gerar Ordem de Serviço</button>
-      </div>
-      <p id="pastaAtual" role="status">Nenhuma pasta escolhida. O arquivo será salvo nos Downloads.</p>
-      <p id="erro" class="erro"></p>
-    </form>
+    <footer>Novas funcionalidades poderão ser organizadas em módulos próprios.</footer>
   </main>
-
-  <dialog id="modalSucesso" aria-labelledby="tituloSucesso">
-    <h2 id="tituloSucesso">Ordem de serviço salva!</h2>
-    <p id="mensagemSucesso"></p>
-    <button type="button" id="fecharModal">Fechar</button>
-  </dialog>
-
-  <script src="ordemServicoTemplate.js"></script>
-  <script src="script.js"></script>
 </body>
 </html>

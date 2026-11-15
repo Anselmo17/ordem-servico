@@ -7,8 +7,7 @@ on:
     paths:
       - index.html
       - style.css
-      - script.js
-      - ordemServicoTemplate.js
+      - funcionalidades/**
       - .github/workflows/pages.yml
   workflow_dispatch:
 
@@ -37,7 +36,11 @@ jobs:
       - name: Preparar os arquivos públicos do site
         run: |
           mkdir site
-          cp index.html style.css script.js ordemServicoTemplate.js site/
+          mkdir -p site/funcionalidades/ordem-servico
+          mkdir -p site/funcionalidades/nota-fiscal
+          cp index.html style.css site/
+          cp funcionalidades/ordem-servico/index.html funcionalidades/ordem-servico/style.css funcionalidades/ordem-servico/script.js funcionalidades/ordem-servico/ordemServicoTemplate.js site/funcionalidades/ordem-servico/
+          cp funcionalidades/nota-fiscal/index.html funcionalidades/nota-fiscal/style.css funcionalidades/nota-fiscal/script.js funcionalidades/nota-fiscal/notaFiscalTemplate.js funcionalidades/nota-fiscal/pdf-lib.min.js funcionalidades/nota-fiscal/pdf-lib.LICENSE.md site/funcionalidades/nota-fiscal/
 
       - name: Enviar artefato do Pages
         uses: actions/upload-pages-artifact@v3

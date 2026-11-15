@@ -1,14 +1,17 @@
 # Ordem de Serviço — JM DIGITAL
 
-Aplicação web simples para registrar atendimentos de assistência técnica de celulares e gerar uma ordem de serviço em Word (`.docx`) a partir do modelo da loja.
+Aplicação web simples para registrar atendimentos de assistência técnica de celulares e gerar documentos de ordem de serviço (`.docx`) e recibo fiscal (`.pdf`) a partir dos modelos da loja.
 
 ## Como usar
 
-1. Mantenha `index.html`, `style.css`, `script.js` e `ordemServicoTemplate.js` juntos na mesma pasta.
+1. Mantenha a estrutura de pastas do projeto.
 2. Abra `index.html` no navegador. Não é necessário instalar dependências nem iniciar um servidor.
-3. Preencha o nome do cliente. Esse é o único campo obrigatório.
-4. Selecione **Escolher pasta** para gravar diretamente em uma pasta escolhida, quando o navegador oferecer esse recurso. Caso contrário, o arquivo é baixado pelo navegador.
-5. Clique em **Gerar Ordem de Serviço**. A confirmação aparece após a gravação ou o início do download.
+3. Na tela inicial, escolha **Ordem de Serviço** ou **Nota Fiscal**.
+4. Preencha os dados solicitados pela funcionalidade escolhida.
+5. Na Ordem de Serviço, selecione **Escolher pasta** para gravar diretamente em uma pasta escolhida, quando o navegador oferecer esse recurso. Caso contrário, o arquivo é baixado pelo navegador.
+6. Acione o botão de geração do documento. A confirmação aparece após a gravação ou o início do download.
+
+A funcionalidade Nota Fiscal preenche e baixa o modelo PDF localmente. Ela não transmite dados à SEFAZ ou à Prefeitura e não substitui a emissão fiscal oficial.
 
 O programa funciona sem conexão com a internet. Para salvar diretamente em uma pasta, use um navegador compatível, como uma versão atual do Chrome ou Edge, e conceda a permissão solicitada. Em navegadores sem esse recurso, como o Safari no iOS, o botão **Escolher pasta** permanece visível e informa que os arquivos serão baixados pelo navegador.
 
@@ -18,7 +21,7 @@ O formulário oferece os temas **Claro** e **Escuro**. Ele sempre inicia no tema
 
 ## Publicar no GitHub Pages
 
-O workflow `.github/workflows/pages.yml` publica o site automaticamente quando há alterações nos arquivos da aplicação na branch `master`. O artefato publicado contém apenas `index.html`, `style.css`, `script.js` e `ordemServicoTemplate.js`; a pasta `OS-Finalizadas` e os documentos DOCX não são copiados para o site.
+O workflow `.github/workflows/pages.yml` publica o site automaticamente quando há alterações nos arquivos da aplicação na branch `master`. O artefato contém a tela inicial e os arquivos necessários para executar os módulos de ordem de serviço e nota fiscal. A pasta `OS-Finalizadas` e os documentos DOCX não são copiados para o site.
 
 Para ativar:
 
@@ -40,13 +43,18 @@ O arquivo recebe o nome `NOME DO CLIENTE-DOCUMENTO.docx`. Se não for informado 
 
 ## Arquivos do projeto
 
-- `index.html`: estrutura da página, formulário e modal de confirmação.
-- `style.css`: aparência e adaptação para telas menores.
-- `script.js`: máscaras, identificação do documento, preenchimento do modelo e gravação do arquivo.
-- `ordemServicoTemplate.js`: contém o modelo DOCX codificado em Base64 para que ele possa ser carregado sem conexão e sem buscar um arquivo via servidor.
-- `ordemServicoTemplate.docx`: cópia legível do modelo original; não é necessária para a execução normal, pois o conteúdo usado pela aplicação está em `ordemServicoTemplate.js`.
+- `index.html`: tela inicial para escolher uma funcionalidade.
+- `style.css`: aparência da tela inicial e adaptação para telas menores.
+- `funcionalidades/ordem-servico/index.html`: formulário e modal de confirmação da ordem de serviço.
+- `funcionalidades/ordem-servico/style.css`: estilos da funcionalidade de ordem de serviço.
+- `funcionalidades/ordem-servico/script.js`: máscaras, identificação do documento, preenchimento do modelo e gravação do arquivo.
+- `funcionalidades/ordem-servico/ordemServicoTemplate.js`: modelo DOCX codificado em Base64 para execução offline.
+- `funcionalidades/ordem-servico/ordemServicoTemplate.docx`: cópia legível do modelo original; não é necessária para a execução normal.
+- `funcionalidades/nota-fiscal/`: formulário, estilos, geração de PDF e modelo da funcionalidade de nota fiscal.
 
-O JavaScript lê o DOCX incorporado, substitui os campos correspondentes no documento e monta um novo arquivo mantendo os demais elementos do modelo. Se o arquivo `ordemServicoTemplate.docx` for alterado, atualize também o conteúdo incorporado em `ordemServicoTemplate.js`.
+O JavaScript lê o DOCX incorporado, substitui os campos correspondentes no documento e monta um novo arquivo mantendo os demais elementos do modelo. Se o arquivo `funcionalidades/ordem-servico/ordemServicoTemplate.docx` for alterado, atualize também o conteúdo incorporado em `funcionalidades/ordem-servico/ordemServicoTemplate.js`.
+
+O módulo de Nota Fiscal contém seu próprio formulário e preenche o modelo PDF; veja [funcionalidades/nota-fiscal/README.md](./funcionalidades/nota-fiscal/README.md) para detalhes de uso e atualização.
 
 ## Privacidade
 

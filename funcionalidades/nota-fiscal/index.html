@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nota Fiscal — JM DIGITAL</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <a class="link-inicio" href="../../index.html">← Voltar ao início</a>
+      <div class="identificacao">
+        <span>JM DIGITAL</span>
+        <span class="icone-nota" aria-hidden="true">NF</span>
+      </div>
+      <h1>Nota Fiscal / Recibo Fiscal</h1>
+    </header>
+
+    <form id="formNotaFiscal">
+      <div class="cabecalho-formulario">
+        <h2 class="secao-titulo">Dados para gerar o documento</h2>
+        <div class="controle-tema">
+          <span class="rotulo-tema">Tema:</span>
+          <div class="seletor-tema" role="group" aria-label="Escolha o tema do formulário">
+            <button type="button" class="opcao-tema" data-tema="claro" aria-pressed="true">☀ Claro</button>
+            <button type="button" class="opcao-tema" data-tema="escuro" aria-pressed="false">☾ Escuro</button>
+          </div>
+        </div>
+      </div>
+
+      <section class="secao-formulario" aria-labelledby="tituloLoja">
+        <h3 id="tituloLoja">Dados da loja</h3>
+        <div class="grade-campos">
+          <div class="campo">
+            <label for="lojaNome">Nome da loja</label>
+            <input id="lojaNome" name="lojaNome" required />
+          </div>
+          <div class="campo">
+            <label for="razaoSocial">Razão social</label>
+            <input id="razaoSocial" name="razaoSocial" />
+          </div>
+          <div class="campo">
+            <label for="lojaCnpj">CNPJ</label>
+            <input id="lojaCnpj" name="lojaCnpj" inputmode="numeric" maxlength="18" />
+          </div>
+          <div class="campo">
+            <label for="lojaIeIm">IE / IM</label>
+            <input id="lojaIeIm" name="lojaIeIm" />
+          </div>
+          <div class="campo campo-largo">
+            <label for="lojaEndereco">Endereço</label>
+            <input id="lojaEndereco" name="lojaEndereco" autocomplete="street-address" />
+          </div>
+          <div class="campo">
+            <label for="lojaTelefone">Telefone</label>
+            <input id="lojaTelefone" name="lojaTelefone" type="tel" autocomplete="tel" maxlength="15" />
+          </div>
+          <div class="campo">
+            <label for="lojaEmail">E-mail</label>
+            <input id="lojaEmail" name="lojaEmail" type="email" autocomplete="email" />
+          </div>
+        </div>
+      </section>
+
+      <section class="secao-formulario" aria-labelledby="tituloDocumento">
+        <h3 id="tituloDocumento">Dados do documento</h3>
+        <div class="grade-campos">
+          <div class="campo">
+            <label for="numeroDocumento">Nº O.S. / Documento</label>
+            <input id="numeroDocumento" name="numeroDocumento" required />
+          </div>
+          <div class="campo">
+            <label for="dataEntrada">Data de entrada</label>
+            <input id="dataEntrada" name="dataEntrada" type="date" />
+          </div>
+          <div class="campo">
+            <label for="dataEmissao">Data de emissão</label>
+            <input id="dataEmissao" name="dataEmissao" type="date" required />
+          </div>
+          <div class="campo">
+            <label for="statusReparo">Status do reparo</label>
+            <select id="statusReparo" name="statusReparo">
+              <option>Em análise</option>
+              <option>Aguardando aprovação</option>
+              <option>Em andamento</option>
+              <option>Concluído</option>
+              <option>Entregue</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <section class="secao-formulario" aria-labelledby="tituloCliente">
+        <h3 id="tituloCliente">Dados do cliente</h3>
+        <div class="grade-campos">
+          <div class="campo campo-largo">
+            <label for="clienteNome">Nome completo / Razão social</label>
+            <input id="clienteNome" name="clienteNome" autocomplete="name" required />
+          </div>
+          <div class="campo">
+            <label for="clienteCpfCnpj">CPF / CNPJ</label>
+            <input id="clienteCpfCnpj" name="clienteCpfCnpj" inputmode="numeric" maxlength="18" />
+          </div>
+          <div class="campo">
+            <label for="clienteEmail">E-mail</label>
+            <input id="clienteEmail" name="clienteEmail" type="email" autocomplete="email" />
+          </div>
+          <div class="campo">
+            <label for="clienteTelefone">Telefone / WhatsApp</label>
+            <input id="clienteTelefone" name="clienteTelefone" type="tel" autocomplete="tel" maxlength="15" />
+          </div>
+          <div class="campo campo-largo">
+            <label for="clienteEndereco">Endereço completo</label>
+            <input id="clienteEndereco" name="clienteEndereco" autocomplete="street-address" />
+          </div>
+        </div>
+      </section>
+
+      <section class="secao-formulario" aria-labelledby="tituloAparelho">
+        <h3 id="tituloAparelho">Dados do aparelho e diagnóstico</h3>
+        <div class="grade-campos">
+          <div class="campo">
+            <label for="aparelhoMarca">Marca</label>
+            <input id="aparelhoMarca" name="aparelhoMarca" />
+          </div>
+          <div class="campo">
+            <label for="aparelhoModelo">Modelo</label>
+            <input id="aparelhoModelo" name="aparelhoModelo" />
+          </div>
+          <div class="campo">
+            <label for="aparelhoImei">IMEI / Número de série</label>
+            <input id="aparelhoImei" name="aparelhoImei" />
+          </div>
+          <div class="campo">
+            <label for="aparelhoAcessorios">Acessórios deixados</label>
+            <input id="aparelhoAcessorios" name="aparelhoAcessorios" />
+          </div>
+          <div class="campo">
+            <label for="aparelhoEstado">Condição física na entrada</label>
+            <input id="aparelhoEstado" name="aparelhoEstado" />
+          </div>
+          <div class="campo campo-largo">
+            <label for="defeitoRelatado">Defeito relatado</label>
+            <textarea id="defeitoRelatado" name="defeitoRelatado" rows="2"></textarea>
+          </div>
+          <div class="campo campo-largo">
+            <label for="laudoTecnico">Laudo técnico / Serviço executado</label>
+            <textarea id="laudoTecnico" name="laudoTecnico" rows="2"></textarea>
+          </div>
+        </div>
+      </section>
+
+      <section class="secao-formulario" aria-labelledby="tituloItens">
+        <h3 id="tituloItens">Serviços e peças</h3>
+        <p class="ajuda">Informe até dois itens padrão e um item adicional. Os subtotais e totais são calculados automaticamente.</p>
+        <div class="item">
+          <h4>Serviço</h4>
+          <div class="grade-item">
+            <div class="campo">
+              <label for="codigoServico">Código / LC116</label>
+              <input id="codigoServico" name="codigoServico" />
+            </div>
+            <div class="campo campo-descricao">
+              <label for="descricaoServico">Descrição</label>
+              <input id="descricaoServico" name="descricaoServico" />
+            </div>
+            <div class="campo">
+              <label for="quantidadeServico">Qtd.</label>
+              <input id="quantidadeServico" name="quantidadeServico" type="number" min="0" step="0.01" value="1" />
+            </div>
+            <div class="campo">
+              <label for="valorServico">Vlr. unitário</label>
+              <input class="campo-moeda" id="valorServico" name="valorServico" inputmode="decimal" placeholder="R$ 0,00" />
+            </div>
+            <p class="subtotal" id="subtotalServico">Subtotal: R$ 0,00</p>
+          </div>
+        </div>
+
+        <div class="item">
+          <h4>Peça</h4>
+          <div class="grade-item">
+            <div class="campo">
+              <label for="ncmPeca">NCM</label>
+              <input id="ncmPeca" name="ncmPeca" />
+            </div>
+            <div class="campo campo-descricao">
+              <label for="descricaoPeca">Descrição</label>
+              <input id="descricaoPeca" name="descricaoPeca" />
+            </div>
+            <div class="campo">
+              <label for="quantidadePeca">Qtd.</label>
+              <input id="quantidadePeca" name="quantidadePeca" type="number" min="0" step="0.01" value="1" />
+            </div>
+            <div class="campo">
+              <label for="valorPeca">Vlr. unitário</label>
+              <input class="campo-moeda" id="valorPeca" name="valorPeca" inputmode="decimal" placeholder="R$ 0,00" />
+            </div>
+            <p class="subtotal" id="subtotalPeca">Subtotal: R$ 0,00</p>
+          </div>
+        </div>
+
+        <div class="item item-adicional">
+          <h4>Item adicional</h4>
+          <div class="grade-item">
+            <div class="campo">
+              <label for="tipoItemAdicional">Tipo</label>
+              <select id="tipoItemAdicional" name="tipoItemAdicional">
+                <option value="Serviço">Serviço</option>
+                <option value="Peça">Peça</option>
+              </select>
+            </div>
+            <div class="campo">
+              <label for="codigoItemAdicional">Código / NCM</label>
+              <input id="codigoItemAdicional" name="codigoItemAdicional" />
+            </div>
+            <div class="campo campo-descricao">
+              <label for="descricaoItemAdicional">Descrição</label>
+              <input id="descricaoItemAdicional" name="descricaoItemAdicional" />
+            </div>
+            <div class="campo">
+              <label for="quantidadeItemAdicional">Qtd.</label>
+              <input id="quantidadeItemAdicional" name="quantidadeItemAdicional" type="number" min="0" step="0.01" value="1" />
+            </div>
+            <div class="campo">
+              <label for="valorItemAdicional">Vlr. unitário</label>
+              <input class="campo-moeda" id="valorItemAdicional" name="valorItemAdicional" inputmode="decimal" placeholder="R$ 0,00" />
+            </div>
+            <p class="subtotal" id="subtotalItemAdicional">Subtotal: R$ 0,00</p>
+          </div>
+        </div>
+
+        <div class="grade-campos totais">
+          <div class="campo">
+            <label for="desconto">Desconto</label>
+            <input class="campo-moeda" id="desconto" name="desconto" inputmode="decimal" placeholder="R$ 0,00" />
+          </div>
+          <p id="totalServicos">Total serviços: R$ 0,00</p>
+          <p id="totalPecas">Total peças: R$ 0,00</p>
+          <p id="totalGeral">Total geral: R$ 0,00</p>
+        </div>
+      </section>
+
+      <section class="secao-formulario" aria-labelledby="tituloPagamento">
+        <h3 id="tituloPagamento">Pagamento e referência fiscal</h3>
+        <div class="grade-campos">
+          <div class="campo">
+            <label for="formaPagamento">Forma de pagamento</label>
+            <select id="formaPagamento" name="formaPagamento">
+              <option value="">Selecione</option>
+              <option>Dinheiro</option>
+              <option>Pix</option>
+              <option>Cartão de débito</option>
+              <option>Cartão de crédito</option>
+              <option>Transferência</option>
+              <option>Outro</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label for="numeroNfse">Chave / Nº NFS-e (serviço)</label>
+            <input id="numeroNfse" name="numeroNfse" />
+          </div>
+          <div class="campo">
+            <label for="numeroNfe">Chave / Nº NF-e ou NFC-e (peça)</label>
+            <input id="numeroNfe" name="numeroNfe" />
+          </div>
+          <div class="campo">
+            <label for="diasGarantia">Garantia (dias)</label>
+            <input id="diasGarantia" name="diasGarantia" type="number" min="0" max="9999" />
+          </div>
+        </div>
+      </section>
+
+      <div class="acoes">
+        <button type="submit" id="btnGerar">Gerar Nota Fiscal</button>
+      </div>
+      <p class="aviso-fiscal">O documento é gerado localmente a partir do modelo da loja. Este formulário não transmite informações para a SEFAZ ou Prefeitura e não substitui a emissão fiscal oficial.</p>
+      <p id="erro" class="erro" role="alert"></p>
+    </form>
+  </main>
+
+  <dialog id="modalSucesso" aria-labelledby="tituloSucesso">
+    <h2 id="tituloSucesso">Documento gerado!</h2>
+    <p id="mensagemSucesso"></p>
+    <button type="button" id="fecharModal">Fechar</button>
+  </dialog>
+
+  <script src="pdf-lib.min.js"></script>
+  <script src="notaFiscalTemplate.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
